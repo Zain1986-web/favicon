@@ -1,23 +1,65 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>PDPB Touna</title>
+  <title>Dashboard PDPB Touna</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <style>
     html,body{
       margin:0;
       height:100%;
+      background:#0b0f2a;
+      font-family:sans-serif;
     }
+
+    #loading{
+      position:fixed;
+      inset:0;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      color:#fff;
+      font-size:14px;
+      background:#0b0f2a;
+      z-index:999;
+    }
+
     iframe{
       width:100%;
       height:100vh;
       border:none;
+      opacity:0;
+      transition:.3s;
+    }
+
+    iframe.show{
+      opacity:1;
     }
   </style>
 </head>
 <body>
 
-<iframe src="https://script.google.com/macros/s/AKfycbytn5TRhL0g_nAp1RswhP2FSZ4ONe5dKLmZ3z6laTF1Nuh85ozjHh2OR8onrgXV8cmu/exec"></iframe>
+<div id="loading">Memuat dashboard...</div>
+
+<iframe id="app"></iframe>
+
+<script>
+const url = "https://script.google.com/macros/s/AKfycbytn5TRhL0g_nAp1RswhP2FSZ4ONe5dKLmZ3z6laTF1Nuh85ozjHh2OR8onrgXV8cmu/exec";
+
+const iframe = document.getElementById("app");
+
+iframe.src = url;
+
+// fallback kalau iframe tidak load
+setTimeout(() => {
+  document.getElementById("loading").innerText = "Jika tidak muncul, buka di tab baru...";
+}, 5000);
+
+iframe.onload = () => {
+  document.getElementById("loading").style.display = "none";
+  iframe.classList.add("show");
+};
+</script>
 
 </body>
 </html>
